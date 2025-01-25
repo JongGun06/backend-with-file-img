@@ -1,14 +1,14 @@
-const Todo = require('../models/model.todo.js');
+const Todo = require('../models/model.todo');
 const cloudinary = require('cloudinary').v2;
 
 async function createTodo(req, res) {
   try {
     const { val } = req.body;
-    const imagePath = req.file ? req.file.path : null;  // URL изображения от Cloudinary
+    const imagePath = req.file ? req.file.path : null;  // Получаем путь к изображению
 
     const message = await Todo.create({
       val,
-      imagePath,  // Сохраняем URL изображения в базу данных
+      imagePath,  // Сохраняем путь к изображению в базу данных
     });
 
     res.status(200).json(message);
@@ -47,7 +47,7 @@ async function updateTodo(req, res) {
 
     const updateTodos = { val };
     if (imagePath) {
-      updateTodos.imagePath = imagePath;  // Обновляем URL изображения в базе данных
+      updateTodos.imagePath = imagePath;  // Обновляем путь к изображению в базе данных
     }
 
     const message = await Todo.findByIdAndUpdate(id, updateTodos);
